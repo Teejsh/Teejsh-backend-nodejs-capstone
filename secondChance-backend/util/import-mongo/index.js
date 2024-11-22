@@ -40,11 +40,11 @@ async function loadData() {
   } finally {
     // Close the connection
     await client.close()
-    }
+  }
 }
 
 loadData()
 
 module.exports = {
-    loadData,
-};
+  loadData
+}
