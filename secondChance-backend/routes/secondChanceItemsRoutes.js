@@ -98,9 +98,9 @@ router.put('/:id', async (req, res, next) => {
       { id },
       { $set: secondChanceItem },
       { returnDocument: 'after' }
-    )    
-    if (updatepreloveItem) {
-      res.json({ uploaded: 'success' })
+    )
+      if (updatepreloveItem) {
+        res.json({ uploaded: 'success' })
     } else {
       res.json({ uploaded: 'failed' })
     }
