@@ -13,7 +13,7 @@ const collectionName = 'secondChanceItems'
 const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs
 
 // connect to database and insert data into the collection
-async function loadData() {
+async function loadData()  {
   const client = new MongoClient(url)
   try {
     // Connect to the MongoDB client
@@ -27,7 +27,6 @@ async function loadData() {
     const collection = db.collection(collectionName)
     const cursor = await collection.find({})
     const documents = await cursor.toArray()
-    
     if (documents.length === 0) {
       // Insert data into the collection
       const insertResult = await collection.insertMany(data)
