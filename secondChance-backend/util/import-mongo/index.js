@@ -1,10 +1,11 @@
 require('dotenv').config()
 const MongoClient = require('mongodb').MongoClient
 const fs = require('fs')
+const path = require('path)
 
 // MongoDB connection URL with authentication options
-let url = `${process.env.MONGO_URL}`
-let filename = `${__dirname}/secondChanceItems.json`
+const url = `${process.env.MONGO_URL}`
+const filename = path.join(__dirname/'secondChanceItems.json')
 const dbName = 'secondChance'
 const collectionName = 'secondChanceItems'
 
@@ -18,7 +19,7 @@ async function loadData() {
     try {
         // Connect to the MongoDB client
         await client.connect()
-        console.log("Connected successfully to server")
+        console.log('Connected successfully to server')
 
         // database will be created if it does not exist
         const db = client.db(dbName)
@@ -33,7 +34,7 @@ async function loadData() {
             const insertResult = await collection.insertMany(data)
             console.log('Inserted documents:', insertResult.insertedCount)
         } else {
-            console.log("Items already exists in DB")
+            console.log('Items already exists in DB')
         }
     } catch (err) {
         console.error(err)
