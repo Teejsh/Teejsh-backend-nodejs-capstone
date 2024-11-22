@@ -1,11 +1,11 @@
 const express = require('express')
 const multer = require('multer')
-const path = require('path')
-const fs = require('fs')
 const router = express.Router()
 const connectToDatabase = require('../models/db')
 const logger = require('../logger')
 require('dotenv').config()
+// const path = require('path')
+// const fs = require('fs')
 
 // Define the upload directory path
 const directoryPath = 'public/images'
@@ -17,24 +17,23 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname) // Use the original file name
-  },
+  }
 })
 
-const upload = multer({ storage: storage })
-
+const upload = multer({ storage })
 
 // Get all secondChanceItems
 router.get('/', async (req, res, next) => {
-    try {
-        const db = await connectToDatabase()
-
-        const collection = db.collection("secondChanceItems")
-        const secondChanceItems = await collection.find({}).toArray()
-        res.json(secondChanceItems)
-    } catch (e) {
-        logger.console.error('Something went wrong ', e)
-        next(e)
-    }
+  try {
+    const db = await connectToDatabase()
+    
+    const collection = db.collection("secondChanceItems")
+    const secondChanceItems = await collection.find({}).toArray()
+    res.json(secondChanceItems)
+  } catch (e) {
+      logger.console.error('Something went wrong ', e)
+      next(e)
+  }
 })
 
 // Get a single secondChanceItem by ID
@@ -43,7 +42,7 @@ router.get('/:id', async (req, res, next) => {
         const db = await connectToDatabase()
         const collection = db.collection("secondChanceItems")
         const id = req.params.id
-        const secondChanceItem = await collection.findOne({ id: id })
+        const secondChanceItem = await collection.findOne({ id })
 
         if (!secondChanceItem) {
             return res.status(404).send("secondChanceItem not found")
