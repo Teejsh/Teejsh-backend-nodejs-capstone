@@ -9,7 +9,6 @@ router.get('/', async (req, res, next) => {
     // Task 1: Connect to MongoDB using connectToDatabase database. Remember to use the await keyword and store the connection in `db`
     const db = await connectToDatabase()
     const collection = db.collection(process.env.MONGO_COLLECTION)
-    
     // Initialize the query object
     const query = {}
 
@@ -17,7 +16,6 @@ router.get('/', async (req, res, next) => {
     if (req.query.name && req.query.name.trim() !== '') {
         query.name = { $regex: req.query.name, $options: 'i' } // Using regex for partial match, case-insensitive
     }
-    
     // Task 3: Add other filters to the query
     if (req.query.category) {
       query.category = req.query.category
@@ -34,8 +32,8 @@ router.get('/', async (req, res, next) => {
 
     res.json(gifts)
   } catch (e) {
-        next(e)
+    next(e)
   }
-});
+})
 
 module.exports = router
