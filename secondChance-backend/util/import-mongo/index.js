@@ -47,4 +47,4 @@ loadData()
 
 module.exports = {
     loadData,
-  };
+};
