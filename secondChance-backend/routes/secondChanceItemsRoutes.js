@@ -99,8 +99,8 @@ router.put('/:id', async (req, res, next) => {
       { $set: secondChanceItem },
       { returnDocument: 'after' }
     )
-      if (updatepreloveItem) {
-        res.json({ uploaded: 'success' })
+    if (updatepreloveItem) {
+      res.json({ uploaded: 'success' })
     } else {
       res.json({ uploaded: 'failed' })
     }
@@ -121,7 +121,7 @@ router.delete('/:id', async (req, res, next) => {
       logger.error('secondChanceItem not found')
       return res.status(404).json({ error: 'secondChanceItem not found' })
     }
-    const updatepreloveItem = await collection.deleteOne({ id })
+    await collection.deleteOne({ id })
 
     res.json({ deleted: 'success' })
   } catch (e) {
