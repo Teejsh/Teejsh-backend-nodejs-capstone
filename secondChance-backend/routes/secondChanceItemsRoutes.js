@@ -58,14 +58,14 @@ router.post('/', upload.single('file'), async (req, res, next) => {
   try {
     const db = await connectToDatabase()
     const collection = db.collection('secondChanceItems')
-    const lastItemQuery = await collection.find().sort({ 'id': -1 }).limit(1)
+    const lastItemQuery = await collection.find().sort({ id: -1 }).limit(1)
     let secondChanceItem = req.body
 
     await lastItemQuery.forEach(item => {
-        secondChanceItem.id = (parseInt(item.id) + 1).toString()
+      secondChanceItem.id = (parseInt(item.id) + 1).toString()
     })
-    const date_added = Math.floor(new Date().getTime() / 1000)
-    secondChanceItem.date_added = date_added
+    const date_Added = Math.floor(new Date().getTime() / 1000)
+    secondChanceItem.date_added = date_Added
 
     secondChanceItem = await collection.insertOne(secondChanceItem)
     console.log(secondChanceItem)
@@ -76,7 +76,7 @@ router.post('/', upload.single('file'), async (req, res, next) => {
 })
 
 // Update and existing item
-router.put('/:id', async(req, res,next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const db = await connectToDatabase()
     const collection = db.collection('secondChanceItems')
@@ -86,22 +86,20 @@ router.put('/:id', async(req, res,next) => {
     if (!secondChanceItem) {
       logger.error('secondChanceItem not found')
       return res.status(404).json({ error: 'secondChanceItem not found' })
-    }
-      
+    }  
     secondChanceItem.category = req.body.category
     secondChanceItem.condition = req.body.condition
     secondChanceItem.age_days = req.body.age_days
     secondChanceItem.description = req.body.description
-    secondChanceItem.age_years = Number((secondChanceItem.age_days/365).toFixed(1))
+    secondChanceItem.age_years = Number((secondChanceItem.age_days / 365).toFixed(1))
     secondChanceItem.updatedAt = new Date()
 
     const updatepreloveItem = await collection.findOneAndUpdate(
       { id },
       { $set: secondChanceItem },
       { returnDocument: 'after' }
-    )
-        
-    if(updatepreloveItem) {
+    )    
+    if (updatepreloveItem) {
       res.json({ 'uploaded':'success' })
     } else {
       res.json({ 'uploaded':'failed' })
