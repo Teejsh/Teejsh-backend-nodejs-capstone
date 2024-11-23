@@ -25,6 +25,7 @@ router.post('/register', async (req, res) => {
         // Task 4: Create a hash to encrypt the password so that it is not readable in the database
         const salt = await bcryptjs.genSalt(10)
         const hash = await bcryptjs.hash(req.body.password, salt)
+        const email = req.body.email
         // Task 5: Insert the user into the database
         const newUser = await collection.insertOne({
             email: req.body.email,
@@ -43,7 +44,7 @@ router.post('/register', async (req, res) => {
         // Task 7: Log the successful registration using the logger
         logger.info('User registered successfully')
         // Task 8: Return the user email and the token as a JSON
-        res.status(201).json({ email: req.body.email, authtoken})
+        res.json({ email, authtoken})
     } catch (e) {
         logger.error(e)
         return res.status(500).send('Internal server error')
