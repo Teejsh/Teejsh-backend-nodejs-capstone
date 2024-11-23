@@ -8,6 +8,7 @@ const { body, validationResult } = require("express-validator")
 require('dotenv').config()
 
 const logger = pino()
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/register', async (req, res) => {
     try {
