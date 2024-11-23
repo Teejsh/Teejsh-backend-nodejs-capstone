@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const router = express.Router()
 const connectToDatabase = require('../models/db')
 const pino = require('pino')
-const { body, validationResult } = require("express-validator")
+const { body, validationResult } = require('express-validator')
 require('dotenv').config()
 
 const logger = pino()
