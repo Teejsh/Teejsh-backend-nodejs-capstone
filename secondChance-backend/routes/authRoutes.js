@@ -52,6 +52,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
+    console.log("\n\n Inside login")
     try {
         // Task 1: Connect to `secondChance` in MongoDB through `connectToDatabase` in `db.js`.
         const db = await connectToDatabase()
@@ -80,7 +81,7 @@ router.post('/login', async (req, res) => {
             // Task 6: Create JWT authentication if passwords match with user._id as payload
             const authtoken = jwt.sign(payload, JWT_SECRET)
 
-            res.json({authtoken, userName, userEmail })
+            return res.status(200).json({ authtoken, userName, userEmail })
         } else {
             logger.error('User not found')
             return res.status(404).json({ error: 'User not found' })
